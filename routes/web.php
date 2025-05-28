@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Symfony\Component\Routing\Router;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\ProductController;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,4 +49,11 @@ Route::prefix('/dashboard')->group(function(){
 Route::get('/categories', [CategoryController::class, 'index']);
 
 Route::get('/userdata', [ArticleController::class, 'userdata']);
+
+Route::get('/userdata/{id}',[ArticleController::class,'show'])->name('userdata.show');
+
+Route::get('/products', [ProductController::class, 'product']);
+
+Route::get('/products/{id}',[ProductController::class,'show_detail'])->name('products.show');
+
 

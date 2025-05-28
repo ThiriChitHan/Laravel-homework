@@ -8,7 +8,8 @@
 <body>
     <h3>Userdata</h3>
     @foreach ($userdata as $data )
-         <p>{{ $data['id']}} {{ $data['name']}} {{ $data['email']}}</p> 
+         <p>{{ $data['id']}} {{ $data['name']}} {{ $data['email']}}</p>
+          <a href="{{route('userdata.show', ['id' => $data->id])}}">Show</a> 
     @endforeach
 </body>
 </html>
