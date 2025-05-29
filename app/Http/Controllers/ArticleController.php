@@ -3,22 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use Illuminate\Http\Request;;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    public function userdata()
+    public function index()
     {
-        $userdata = Article::all();
-        return view('categories.article', compact('userdata'));
+        $articledata = Article::all();
+        return view('articles.index', compact('articledata'));
     }
     public function show($id)
     {
         // dd('here');
         // dd($id);
-        $userdata = Article::find($id);
+        $articledata = Article::find($id);
 
         // dd($category);
-        return view('categories.show', compact('userdata'));
+        return view('articles.show', compact('articledata'));
     }
 }

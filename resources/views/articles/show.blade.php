@@ -11,7 +11,7 @@
         <h1>Article Show</h1>
         {{-- {{dd($category)}} --}}
 
-        <p>{{$userdata['id']}} : {{$userdata['name']}} : {{$userdata['email']}}</p>
+        <p>{{$articledata['id']}} : {{$articledata['name']}} : {{$articledata['email']}}</p>
 
     </div>
 </body>

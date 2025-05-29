@@ -13,7 +13,7 @@ class ArticleSeeder extends Seeder
      */
     public function run(): void
     {
-         $userdata =[
+         $articledata =[
             [
                 'name' => 'John-',
                 'email' => 'john@gmail.com',
@@ -36,7 +36,7 @@ class ArticleSeeder extends Seeder
             ],
         ];
 
-           foreach($userdata as $data)
+           foreach($articledata as $data)
       {
         Article::create($data);
       }

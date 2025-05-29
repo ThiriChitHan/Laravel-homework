@@ -48,11 +48,11 @@ Route::prefix('/dashboard')->group(function(){
 // });
 Route::get('/categories', [CategoryController::class, 'index']);
 
-Route::get('/userdata', [ArticleController::class, 'userdata']);
+Route::get('/articledata', [ArticleController::class, 'index']);
 
-Route::get('/userdata/{id}',[ArticleController::class,'show'])->name('userdata.show');
+Route::get('/articledata/{id}',[ArticleController::class,'show'])->name('articles.show');
 
-Route::get('/products', [ProductController::class, 'product']);
+Route::get('/products', [ProductController::class, 'index']);
 
 Route::get('/products/{id}',[ProductController::class,'show_detail'])->name('products.show');
 
