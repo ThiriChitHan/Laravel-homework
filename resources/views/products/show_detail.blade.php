@@ -6,8 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-          <h1>Show Products</h1>
-
-        <p>{{$product['id']}} : {{$product['name']}} : {{$product['description']}} : {{$product['price']}}</p>
+        <h1>Show Products</h1>
+        <p>{{$products->id}} : {{$products->name}} : {{$products->description}} : {{$products->price}}</p>
 </body>
 </html>
+
