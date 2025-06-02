@@ -23,6 +23,7 @@ class ArticleController extends Controller
     public function edit($id)
     {
         // dd('here');
+      
         $articles = Article::find($id);
         return view('articles.edit', compact('articles'));
     }
@@ -41,10 +42,16 @@ class ArticleController extends Controller
     }
     public function store(Request $request)
     {
-        Article::create([
-            'name' => $request->name,
-            'email' => $request->email
+
+        // Article::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email
+        // ]);
+        $data = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string'
         ]);
+         Article::create($data);
         return redirect()->route('articles.index');
     
     }

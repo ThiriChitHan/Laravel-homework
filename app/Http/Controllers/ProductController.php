@@ -44,13 +44,18 @@ class ProductController extends Controller
 
      public function store(Request $request)
     {
-        Product::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price
+         // Product::create([
+        //     'name' => $request->name,
+        //     'description' => $request->description,
+        //     'price' => $request->price
+        // ]);
+        $data = $request->validate([
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'price' => 'required|intenger'
         ]);
-        return redirect()->route('products.index');
-    
+          Product::create($data);
+        return redirect()->route('products.index'); 
     }
 
      public function delete($id)
