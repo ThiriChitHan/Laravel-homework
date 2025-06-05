@@ -2,48 +2,49 @@
 
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Routing\Router;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// Static Route
-Route::get('/blogs', function(){
-    return "This is Blog.";
-});
-
-// Dynamic Route
-Route::get('/blogs/{id}', function($id){
-    return "This is Blog Details - $id";
-});
-
-// // Naming Route
-// Route::get('/dashboard', function(){
-//     return "Welcome TPP";
-// })->name('dashboard.tpp');
-
-// Route::get('/tpp', function(){
-//     return redirect()->route('dashboard.tpp');
+// // Static Route
+// Route::get('/blogs', function(){
+//     return "This is Blog.";
 // });
 
-// Group Route
-Route::prefix('/dashboard')->group(function(){
-    Route::get('/admin', function(){
-        return "This is Admin Dashboard";
-    });
+// // Dynamic Route
+// Route::get('/blogs/{id}', function($id){
+//     return "This is Blog Details - $id";
+// });
 
-    Route::get('/user', function(){
-        return "This is User Dashabord";
-    })->name('user');
+// // // Naming Route
+// // Route::get('/dashboard', function(){
+// //     return "Welcome TPP";
+// // })->name('dashboard.tpp');
 
-    Route::get('/tpp', function(){
-        return redirect()->route('user');
-    });
-});
+// // Route::get('/tpp', function(){
+// //     return redirect()->route('dashboard.tpp');
+// // });
+
+// // Group Route
+// Route::prefix('/dashboard')->group(function(){
+//     Route::get('/admin', function(){
+//         return "This is Admin Dashboard";
+//     });
+
+//     Route::get('/user', function(){
+//         return "This is User Dashabord";
+//     })->name('user');
+
+//     Route::get('/tpp', function(){
+//         return redirect()->route('user');
+//     });
+// });
 
 
 //Category
@@ -79,4 +80,22 @@ Route::post('/products/{id}/update', [ProductController::class, 'update'])->name
 //Delete Products Route
 Route::post('/products/{id}/delete', [ProductController::class, 'delete'])->name('products.delete');
 
+
+
+// Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//User Route
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+// Create&Store User Route
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
+//Show User Route
+Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+//Edit & Update User Route
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::post('/users/{id}/update', [UserController::class, 'update'])->name('users.update');
+//Delete User Route
+Route::post('/users/{id}/delete', [UserController::class, 'delete'])->name('users.delete');
 

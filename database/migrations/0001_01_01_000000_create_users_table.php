@@ -15,12 +15,20 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('gender')->nullable();
+            $table->boolean('status')->default('1');
+            $table->string('image')->nullable();
+           
+
             $table->string('password');
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
-
+       
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
