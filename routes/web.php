@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\Routing\Router;
 use App\Http\Controllers\UserController;
@@ -99,3 +100,6 @@ Route::post('/users/{id}/update', [UserController::class, 'update'])->name('user
 //Delete User Route
 Route::post('/users/{id}/delete', [UserController::class, 'delete'])->name('users.delete');
 
+Auth::routes(['register' => false]);
+
+Route::post('/users/{id}/stauts', [UserController::class, 'userStatus'])->name('users.status');

@@ -17,6 +17,7 @@ class ProductController extends Controller
 {
     $this->productRepository = $productRepository;
     $this->categoryRepository = $categoryRepository;
+     $this->middleware('auth');
 }
 
 
