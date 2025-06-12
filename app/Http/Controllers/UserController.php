@@ -5,114 +5,132 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use App\Services\User\UserService;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserUpdateRequest;
+use App\Repositories\Role\RoleRepositoryInterface;
 use App\Repositories\User\UserRepositoryInterface;
-use App\Services\User\UserService;
 
 class UserController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     protected $userRepository;
+    protected $roleRepository;
     protected $userService;
+
     public function __construct(UserRepositoryInterface $userRepository, UserService $userService)
     {
+        $this->middleware('auth');
         $this->userRepository = $userRepository;
         $this->userService = $userService;
-        $this->middleware('auth');
     }
 
     public function index()
     {
         $users = $this->userRepository->index();
+
         return view('users.index', compact('users'));
     }
 
-    public function show($id)
-    {
-        $user = User::find($id);
-        return view('users.show', compact('user'));
-    }
-
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return view('users.create');
+        $roles = Role::get();
+        return view('users.create', compact('roles'));
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(UserRequest $request)
     {
-        $validated = $request->validated();
-        if ($request->hasFile('image')) {
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('userImages'), $imageName);
-        }
 
-        $this->userRepository->store(
-            [
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'address' => $validated['address'],
-                'phone' => $validated['phone'],
-                'image' => $imageName,
-                'gender' => $validated['gender'],
-                'password' => Hash::make($validated['password']),
-            ]
-        );
+        $validatedData = $request->validated();
 
-        return redirect()->route('users.index');
-    }
+        // echo "<br/><br/>";
+        // echo count($validatedData);
 
-    public function edit($id)
-    {
-        $user = $this->userRepository->edit($id);
-        return view('users.edit', compact('user'));
-    }
+        $data = [
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+            'phone' => $validatedData['phone'],
+            'gender' => $validatedData['gender'],
+            'address' => $validatedData['address'],
+        ];
 
-    public function update(UserUpdateRequest $request)
-    {
-        $user = $this->userRepository->edit($request->id);
+        $user = $this->userRepository->store($data);
+        // // User::create($data);
 
 
-
-        if ($request->hasFile('image')) {
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('userImages'), $imageName);
-            // $request->image = $imageName;
-        }
-
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'gender' => $request->gender,
-            'address' => $request->address,
-            'status' => $request->status,
-            'image' => $request->image,
-
-        ]);
-
-
+        $user->roles()->sync($validatedData['roles']);
 
         return redirect()->route('users.index');
     }
 
-    public function delete($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        // dd($id);
-        $user = User::find($id);
-        // dd($user);
-        $user->delete();
-        // $user = $this->userRepository->edit($id);
-        // $user->delete();
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $user = $this->userRepository->show($id);
+
+        $roles = $this->userRepository->create();
+
+        return view('users.edit', compact('user', 'roles'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UserUpdateRequest $request, string $id)
+    {
+        $validatedData = $request->validated();
+
+        $data = [
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'phone' => $validatedData['phone'],
+            'address' => $validatedData['address'],
+            'gender' => $validatedData['gender'],
+
+        ];
+
+        $user = $this->userRepository->show($id);
+
+        $user->update($data);
+
+        $user->roles()->sync($validatedData["roles"]);
+
         return redirect()->route('users.index');
     }
 
-    public function userStatus($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function delete(string $id)
     {
-        // $user = User::find($id);
+        $this->userRepository->delete($id);
 
-        // $user->status = $user->status === 1 ? 0 : 1;
+        return redirect()->route('users.index');
+    }
 
-        // $user->save();
+    public function status($id)
+    {
+        $this->userService->status($id);
 
         return redirect()->route('users.index');
     }

@@ -25,7 +25,6 @@ class CategoryController extends Controller
         $categories = $this->categoryRepository->index();
 
         return view('categories.index', compact('categories'));
-
     }
 
     public function show($id)
@@ -47,17 +46,17 @@ class CategoryController extends Controller
     {
         $category = $request->validate([
             'name' => 'required|string',
-            'image'=> 'required',
+            'image' => 'required',
 
         ]);
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
 
             // dd($imageName);
 
-            $request->image->move(public_path('categoryImages'),$imageName);
+            $request->image->move(public_path('categoryImages'), $imageName);
 
-            $category = array_merge($category,['image' => $imageName]);
+            $category = array_merge($category, ['image' => $imageName]);
         }
         // Category::create($category);
         $this->categoryRepository->store($category);
@@ -94,5 +93,15 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('categories.index');
+    }
+
+    public function categoriesCount()
+    {
+        $categories = Category::get();
+
+        // dd($categories);
+        $totalCategories = count($categories);
+        // dd($totalCatgories);
+        return view('index', compact('totalCategories'));
     }
 }

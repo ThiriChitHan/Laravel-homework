@@ -24,12 +24,16 @@
                 </td>
                 <td class="d-flex">
                     <a href="{{route('categories.show', ['id' => $category->id])}}" class="btn btn-outline-primary me-2">Show</a>
-                    <a href="{{route('categories.edit', ['id' => $category->id])}}" class="btn btn-outline-warning me-2">Edit</a>
 
+                      @can('categoryUpdate')
+                    <a href="{{route('categories.edit', ['id' => $category->id])}}" class="btn btn-outline-warning me-2">Edit</a>
+                     @endcan
+                    @can('categoryDelete')
                     <form action="{{ route('categories.delete', $category->id) }}" method="POST">
                         @csrf
                         <button class="btn btn-outline-danger">Delete</button>
                     </form>
+                    @endcan
                 </td>
             </tr>
             @endforeach

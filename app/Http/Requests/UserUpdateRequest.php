@@ -1,7 +1,3 @@
-<?php
-
-namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserUpdateRequest extends FormRequest
@@ -29,7 +25,9 @@ class UserUpdateRequest extends FormRequest
             'address' => 'required|string',
             'status' => 'required',
             'image' => 'nullable',
-            
+            // 'password' => 'required',
+            'roles' => 'required|exists:roles,id',
+
         ];
     }
 }

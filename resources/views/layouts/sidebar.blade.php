@@ -40,13 +40,15 @@
                     </a>
                 </li>
                 <li class="app-sidebar__heading">UI Components</li>
-                <li>
+                @can('categoryList')
+                      <li>
                     <a href="{{route('categories.index')}}">
                         <i class="metismenu-icon pe-7s-diamond"></i>
                         Category
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                 </li>
+                @endcan
                 <li>
                     <a href="{{route('users.index')}}">
                         <i class="metismenu-icon pe-7s-diamond"></i>
@@ -58,6 +60,13 @@
                     <a href="{{route('products.index')}}">
                         <i class="metismenu-icon pe-7s-diamond"></i>
                         Product
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('roles.index')}}">
+                        <i class="metismenu-icon pe-7s-diamond"></i>
+                        Role
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                 </li>

@@ -13,8 +13,8 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-       $users =[
-        [
+       $admin = User::create([
+        
             'name' => 'John Smith',
             'email' => 'johnsmith@gmail.com',
             'address' => 'Kyaukse',
@@ -22,47 +22,25 @@ class UserSeeder extends Seeder
              'gender' => 'Male',
              'password' => 'password',
              'status' => ' 1',
-        ],
-         [
+
+         ]);
+         $client = User::create([
+
             'name' => 'Michael Johnson',
             'email' => 'michaeljohnson@gmail.com',
             'address' => 'USA',
              'phone' => '09-917-323-435',
              'gender' => 'Male',
              'password' => 'password',
-             'status' => ' 1',
-        ],
-         [
-            'name' => 'Emily Davis',
-            'email' => 'emilydavis@gmail.com',
-            'address' => 'USA',
-             'phone' => '09-917-323-435',
-             'gender' => 'Female',
-             'password' => 'password',
-             'status' => ' 1',
-        ],
-         [
-            'name' => 'David Wilson',
-            'email' => 'davidwilson@gmail.com',
-            'address' => 'Mandalay',
-             'phone' => '09-917-323-435',
-             'gender' => 'Male',
-             'password' => 'password',
-             'status' => ' 1',
-        ],
-         [
-            'name' => 'Sarah Martinez',
-            'email' => 'sarahmartinez@gmail.com',
-            'address' => 'Yangon',
-             'phone' => '09-917-323-435',
-             'gender' => 'Female',
-             'password' => 'password',
-             'status' => ' 1',
-        ],
-        ];
+             'status' => ' 1',  
+    ]);
         
-        foreach ($users as $user) {
-            User::create($user);
-        }
+        
+        // foreach ($users as $user) {
+        //     User::create($user);
+        // }
+
+        $admin->assignRole('admin');
+        $client->assignRole('client');
     }
 }
