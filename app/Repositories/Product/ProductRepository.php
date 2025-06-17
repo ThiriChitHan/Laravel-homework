@@ -13,7 +13,8 @@ class ProductRepository implements ProductRepositoryInterface
 
     public function index()
     {
-        $products = Product::with('category')->get();
+        $products = Product::with('category')->where('status', 1)->get();
+
 
         return $products;
     }

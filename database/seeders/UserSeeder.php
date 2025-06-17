@@ -40,7 +40,7 @@ class UserSeeder extends Seeder
         //     User::create($user);
         // }
 
-        $admin->assignRole('admin');
+        $admin->assignRole ('admin');
         $client->assignRole('client');
     }
 }
