@@ -12,7 +12,10 @@ class RoleAndPermissionSeeder extends Seeder
     /**
      
 Run the database seeds.*/
-  public function run(): void{$admin = Role::create(['name' => 'admin']);$client = Role::create(['name' => 'client']);
+  public function run(): void{
+    
+        $admin = Role::create(['name' => 'admin']);
+        $client = Role::create(['name' => 'client']);
 
         $categoryList = Permission::create(['name' => 'categoryList']);
         $categoryCreate = Permission::create(['name' => 'categoryCreate']);
